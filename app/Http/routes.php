@@ -12,6 +12,12 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('admin','HomeController@admin');
+Route::resource('reservations','ReservationController');
+Route::resource('professionals','ProfessionalController');
+
+
+
 
 //Pasar parametro por get
 Route::get('nombre/{nombre}',function($nombre){

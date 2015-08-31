@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Reservations\Http\Requests;
 use Reservations\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class ReservationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+        return view('reservations');
     }
 
     /**
@@ -73,20 +73,6 @@ class HomeController extends Controller
     {
         //
     }
-
-
-     /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function admin()
-    {
-        return view('admin.index');
-    }
-
 
     /**
      * Remove the specified resource from storage.

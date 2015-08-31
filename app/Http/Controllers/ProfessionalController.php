@@ -3,11 +3,13 @@
 namespace Reservations\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Reservations\Http\Requests;
 use Reservations\Http\Controllers\Controller;
+use Illuminate\Support\Farcades\Session;
+use Illuminate\Support\Farcades\Redirect;
+use Reservations\Professional;
 
-class HomeController extends Controller
+class ProfessionalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +18,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $professionals = Professional::All();
+        return view('professional.index',compact('professionals'));
     }
 
     /**
@@ -26,7 +29,7 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        return view('professional.create');
     }
 
     /**
@@ -37,7 +40,15 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Professional::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => $request['password'],
+            'phone_number' => $request['phone_number'],
+            'address' => $request['address'],
+        ]);
+
+        return redirect('/professionals')->with('message','store');
     }
 
     /**
@@ -59,7 +70,8 @@ class HomeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $professional = Professional::find($id);
+        return view('professional.edit',['professional'=>$professional]);
     }
 
     /**
@@ -71,22 +83,12 @@ class HomeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $professional = Professional::find($id);
+        $professional->fill($request->all());
+        $professional->save();
+        Session::flash('message','Usuario editado correctamente');
+        return redirect('/professionals')->with('message','store');
     }
-
-
-     /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function admin()
-    {
-        return view('admin.index');
-    }
-
 
     /**
      * Remove the specified resource from storage.
